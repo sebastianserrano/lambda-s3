@@ -17,16 +17,16 @@ exports.lambdaHandler = (event, context, callback) => {
   const file = getFile(BUCKET, fileMime, buffer);
   const parameters = file.parameters;
 
-  try {
-    s3.putObject(parameters, (error, data) => {
+  s3.putObject(parameters, (error, data) => {
+    if(error) { 
+      callback(error)
+    } else {
       callback(null, {
         statusCode: 200,
         body: JSON.stringify({
           ...file.description
         })
       });
-    })
-  } catch (error) {
-    callback(error);
-  }
+    }
+  })
 };
