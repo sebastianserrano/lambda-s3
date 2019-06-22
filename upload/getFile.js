@@ -1,14 +1,15 @@
-const createFileFromBuffer = require('./createFile.js');
+const createFileFromBuffer = require('./createFile.js')
+const BUCKET = 'lambda-s3-0'
 
-module.exports = (bucket, buffer) => {
-  const file = createFileFromBuffer(buffer);
+module.exports = (buffer) => {
+  const file = createFileFromBuffer(buffer)
 
   const parameters = {
-    Bucket: bucket,
+    Bucket: BUCKET,
     Key: file.path,
     Body: buffer,
-    ACL: "public-read"
-  };
+    ACL: 'public-read'
+  }
 
   const description = {
     size: buffer.toString('ascii').length,
