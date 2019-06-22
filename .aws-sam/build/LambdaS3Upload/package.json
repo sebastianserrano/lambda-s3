@@ -1,0 +1,36 @@
+{
+  "name": "LambdaS3Upload",
+  "version": "1.0.0",
+  "description": "Upload file in s3 bucket for NodeJS",
+  "main": "upload.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sebastianserrano/lambda-s3.git"
+  },
+  "author": "Sebastian Serrano",
+  "license": "MIT",
+  "dependencies": {
+    "aws-sdk": "^2.478.0",
+    "file-type": "^12.0.0",
+    "js-sha1": "^0.6.0",
+    "moment": "^2.24.0",
+    "eslint": "^6.0.0",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-plugin-import": "^2.17.3",
+    "eslint-plugin-node": "^9.1.0",
+    "eslint-plugin-promise": "^4.1.1",
+    "eslint-plugin-standard": "^4.0.0"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^6.1.4",
+    "lambda-tester": "^3.6.0"
+  },
+  "scripts": {
+    "test": "mocha upload/**/*.test.js"
+  },
+  "bugs": {
+    "url": "https://github.com/sebastianserrano/lambda-s3/issues"
+  },
+  "homepage": "https://github.com/sebastianserrano/lambda-s3#readme"
+}

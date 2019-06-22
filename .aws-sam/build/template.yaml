@@ -1,0 +1,38 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'lambda-s3 upload
+
+  '
+Globals:
+  Function:
+    Timeout: 3
+Outputs:
+  LambdaS3Upload:
+    Description: Lambda S3 Upload Function ARN
+    Value:
+      Fn::GetAtt:
+      - LambdaS3Upload
+      - Arn
+  LambdaS3UploadApi:
+    Description: API Gateway endpoint URL for Prod stage for Lambda S3 Upload function
+    Value:
+      Fn::Sub: https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/prod/s3-upload/
+  LambdaS3UploadIamRole:
+    Description: Implicit IAM Role created for Lambda S3 Upload function
+    Value:
+      Fn::GetAtt:
+      - LambdaS3UploadFunctionRole
+      - Arn
+Resources:
+  LambdaS3Upload:
+    Properties:
+      CodeUri: LambdaS3Upload
+      Events:
+        LambdaS3Upload:
+          Properties:
+            Method: post
+            Path: /upload
+          Type: Api
+      Handler: upload.handler
+      Runtime: nodejs10.x
+    Type: AWS::Serverless::Function
+Transform: AWS::Serverless-2016-10-31
