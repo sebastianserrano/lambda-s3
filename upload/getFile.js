@@ -3,17 +3,18 @@ const moment = require('moment');
 
 module.exports = (bucket, fileMime, buffer) => {
   const fileExtension = '.' + fileMime.ext;
-  const hash = sha1(new Buffer(new Date().toString()));
+  const hash = sha1(new Date().toString());
 
   const filePath = hash + '/';
   const fileName = moment().format('YYYY-MM-DD-HH:mm:ss');
-  const fileFullName = filePath + fileName;
+  const fileFullName = filePath + fileName + fileExtension;
   const fileFullPath = bucket + fileFullName;
 
   const parameters = {
     Bucket: bucket,
-    Key: fileFullName + fileExtension,
-    Body: buffer
+    Key: fileFullName,
+    Body: buffer,
+    ACL: "public-read"
   };
 
   const description = {
