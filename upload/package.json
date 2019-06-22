@@ -1,14 +1,16 @@
 {
-  "name": "hello_world",
+  "name": "LambdaS3Upload",
   "version": "1.0.0",
-  "description": "hello world sample for NodeJS",
+  "description": "Upload file in s3 bucket for NodeJS",
   "main": "upload.js",
-  "repository": "https://github.com/awslabs/aws-sam-cli/tree/develop/samcli/local/init/templates/cookiecutter-aws-sam-hello-nodejs",
-  "author": "SAM CLI",
+  "repository": "https://github.com/sebastianserrano/lambda-s3",
+  "author": "Sebastian Serrano",
   "license": "MIT",
   "dependencies": {
     "aws-sdk": "^2.478.0",
-    "axios": "^0.18.0"
+    "file-type": "^12.0.0",
+    "js-sha1": "^0.6.0",
+    "moment": "^2.24.0"
   },
   "scripts": {
     "test": "mocha tests/unit/"
