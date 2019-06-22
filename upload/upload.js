@@ -1,33 +1,30 @@
-// const axios = require('axios')
-// const url = 'http://checkip.amazonaws.com/';
-let response;
-const s3 = require('aws-sdk/clients/s3')
+var AWS = require('aws-sdk');
+AWS.config.update({region: 'us-east-2'});
+const s3 = new AWS.S3({apiVersion: '2006-03-01'});
 
-/**
- *
- * Event doc: https://docs.aws.amazon.com/apigateway/latest/developerguide/set-up-lambda-proxy-integrations.html#api-gateway-simple-proxy-for-lambda-input-format
- * @param {Object} event - API Gateway Lambda Proxy Input Format
- *
- * Context doc: https://docs.aws.amazon.com/lambda/latest/dg/nodejs-prog-model-context.html 
- * @param {Object} context
- *
- * Return doc: https://docs.aws.amazon.com/apigateway/latest/developerguide/set-up-lambda-proxy-integrations.html
- * @returns {Object} object - API Gateway Lambda Proxy Output Format
- * 
- */
-exports.lambdaHandler = async (event, context) => {
-    try {
-        // const ret = await axios(url);
-        response = {
-            'statusCode': 200,
-            'body': JSON.stringify({
-                message: 'hello world',
-            })
-        }
-    } catch (err) {
-        console.log(err);
-        return err;
-    }
+const fileType = require('file-type');
+const getFile = require('./getFile.js');
 
-    return response
+const BUCKET = 'lambda-s3-0';
+
+exports.lambdaHandler = (event, context, callback) => {
+  const request = JSON.parse(event.body);
+  const base64String = request.base64String;
+
+  const buffer = new Buffer(base64String, 'base64');
+  const fileMime = fileType(buffer);
+
+  const file = getFile(BUCKET, fileMime, buffer);
+  const parameters = file.parameters;
+
+  try {
+    s3.putObject(parameters, (error, data) => {
+      if(error) callback(error);
+      callback(null, {
+        'statusCode': 200
+      })
+    })
+  } catch (error) {
+    callback(error);
+  }
 };
