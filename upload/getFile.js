@@ -1,27 +1,36 @@
 const sha1 = require('js-sha1');
 const moment = require('moment');
 
-module.exports = (bucket, fileMime, buffer) => {
-  const fileExtension = '.' + fileMime.ext;
+function createFileFromMime(mime) {
+  const fileExtension = '.' + mime.ext;
   const hash = sha1(new Date().toString());
 
   const filePath = hash + '/';
   const fileName = moment().format('YYYY-MM-DD-HH:mm:ss');
   const fileFullName = filePath + fileName + fileExtension;
-  const fileFullPath = bucket + fileFullName;
+
+  return {
+    name: fileName,
+    path: fileFullName,
+    mime: mime.mime
+  }
+}
+
+module.exports = (bucket, fileMime, buffer) => {
+  const file = createFileFromMime(fileMime);
 
   const parameters = {
     Bucket: bucket,
-    Key: fileFullName,
+    Key: file.path,
     Body: buffer,
     ACL: "public-read"
   };
 
   const description = {
     size: buffer.toString('ascii').length,
-    type: fileMime.mime,
-    name: fileName,
-    path: fileFullName
+    type: file.mime,
+    name: file.name,
+    path: file.path
   }
 
   return {
