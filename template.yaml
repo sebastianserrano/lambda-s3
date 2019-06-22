@@ -2,7 +2,6 @@ AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
 Description: >
   lambda-s3 upload
-
   
 # More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
 Globals:
@@ -35,4 +34,4 @@ Outputs:
     Value: !GetAtt LambdaS3Upload.Arn
   LambdaS3UploadIamRole:
     Description: "Implicit IAM Role created for Lambda S3 Upload function"
-    Value: !GetAtt LambdaS3UploadFunctionRole.Arn
+    Value: !GetAtt LambdaS3UploadRole.Arn
