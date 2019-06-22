@@ -7,7 +7,7 @@ const getFile = require('./getFile.js');
 
 const BUCKET = 'lambda-s3-0';
 
-exports.lambdaHandler = (event, context, callback) => {
+exports.lambdaHandler = async (event, context, callback) => {
   const request = JSON.parse(event.body);
   const base64String = request.base64String;
 
@@ -17,16 +17,15 @@ exports.lambdaHandler = (event, context, callback) => {
   const file = getFile(BUCKET, fileMime, buffer);
   const parameters = file.parameters;
 
-  s3.putObject(parameters, (error, data) => {
-    if(error) { 
-      callback(error)
-    } else {
-      callback(null, {
-        statusCode: 200,
-        body: JSON.stringify({
-          ...file.description
-        })
-      });
-    }
-  })
+  try {
+    await s3.putObject(parameters);
+    callback(null, {
+      statusCode: 200,
+      body: JSON.stringify({
+        ...file.description
+      })
+    });
+  } catch(error) {
+    callback(error)
+  }
 };
