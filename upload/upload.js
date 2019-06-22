@@ -11,7 +11,7 @@ exports.lambdaHandler = (event, context, callback) => {
   const request = JSON.parse(event.body);
   const base64String = request.base64String;
 
-  const buffer = new Buffer(base64String, 'base64');
+  const buffer = Buffer.from(base64String, 'base64');
   const fileMime = fileType(buffer);
 
   const file = getFile(BUCKET, fileMime, buffer);
@@ -19,10 +19,12 @@ exports.lambdaHandler = (event, context, callback) => {
 
   try {
     s3.putObject(parameters, (error, data) => {
-      if(error) callback(error);
       callback(null, {
-        'statusCode': 200
-      })
+        statusCode: 200,
+        body: JSON.stringify({
+          ...file.description
+        })
+      });
     })
   } catch (error) {
     callback(error);
