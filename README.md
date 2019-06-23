@@ -12,11 +12,11 @@
   </a>
 </p>
 
-> Upload fileto s3 bucket via lambda function
+> Upload file to s3 bucket via lambda function
 
 ### 🏠 [Homepage](https://github.com/sebastianserrano/lambda-s3#readme)
 
-```bash
+```
 .
 ├── README.MD                   <-- This instructions file
 ├── event.json                  <-- API Gateway Proxy Integration event payload
@@ -33,7 +33,7 @@
 **Invoking function locally using a local sample payload**
 
 ```bash
-sam local invoke HelloWorldFunction --event event.json
+sam local invoke LambdaS3Upload --event event.json
 ```
  
 **Invoking function locally through local API Gateway**
@@ -42,7 +42,7 @@ sam local invoke HelloWorldFunction --event event.json
 sam local start-api
 ```
 
-If the previous command ran successfully you should now be able to hit the following local endpoint to invoke your function `http://localhost:3000/hello`
+If the previous command ran successfully you should now be able to hit the following local endpoint to invoke your function `http://localhost:3000/upload`
 
 ## Packaging and deployment
 
