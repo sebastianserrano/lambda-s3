@@ -13,7 +13,7 @@
     "aws-sdk": "^2.478.0",
     "file-type": "^12.0.0",
     "js-sha1": "^0.6.0",
-    "moment": "^2.24.0",
+    "moment": "^2.29.4",
     "eslint": "^6.0.0",
     "eslint-config-standard": "^12.0.0",
     "eslint-plugin-import": "^2.17.3",
